@@ -23,7 +23,7 @@ class SignInScreen extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               alignment: Alignment.center,
               child: const Text(
-                'Bienvenid@ a la mejor aplicación sobre juegos, enterate de todos los juegos que estan haciendo tendencia en el mundo y diviertete',
+                'Bienvenid@ a la mejor aplicación sobre juegos, erate de todos los juegos que estan haciendo tendencia en el mundo y diviertete',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w400),
               ),
