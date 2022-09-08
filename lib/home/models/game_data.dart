@@ -40,6 +40,7 @@ class GameData {
     String developer;
     DateTime? releaseDate;
     String freetogameProfileUrl;
+    /// contiene un objeto de datos con los requeriminetos minimos del sistema para instalar el juego
     MinimumSystemRequirements? minimumSystemRequirements;
     List<Screenshot> screenshots;
 
