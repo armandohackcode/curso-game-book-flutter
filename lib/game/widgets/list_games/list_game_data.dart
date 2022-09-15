@@ -21,7 +21,7 @@ class _ListGameDataState extends State<ListGameData> {
         return CardGame(game: GameModel(
           title:"Diablo Immortal",
           platform: "PC (Windows)",
-          freetogameProfileUrl: "https://www.freetogame.com/g/521/thumbnail.jpg"
+          freetogameProfileUrl: "https://www.freetogame.com/g/525/thumbnail.jpg"
         ));
       },
     );

@@ -8,17 +8,19 @@ class ListGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(children: [
-        Container(
-          height: 400,
-          child: ListGameSlide(),
-        ),
-
-        Container(
-          padding: EdgeInsets.all(15),
-          child: Text("Todos los juegos",style: TextStyle(fontSize:28 ,fontWeight: FontWeight.bold),)),
-        const ListGameData(),
-      ]),
+      body: SafeArea(
+        child: ListView(children: [
+          Container(
+            height: MediaQuery.of(context).size.height*0.33,
+            child: const ListGameSlide(),
+          ),
+      
+          Container(
+            padding: const EdgeInsets.all(15),
+            child: const Text("Todos los juegos",style: TextStyle(fontSize:28 ,fontWeight: FontWeight.bold),)),
+          const ListGameData(),
+        ]),
+      ),
     );
   }
 }

@@ -13,10 +13,24 @@ class CardGame extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     // var height = MediaQuery.of(context).size.height;
     return Container(
+      margin: const EdgeInsets.only(top: 5, bottom: 10),
       height: 200,
-      alignment: const Alignment(0, 0.9),
       decoration: boxDecoration(),
-      child: title(width),
+      child: Container(
+          alignment: const Alignment(0, 0.9),
+          height: 200,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                const Color(0xFF161B22).withOpacity(0.00),
+                const Color(0xFF161B22).withOpacity(1.0),
+              ],
+              stops: const [0.0, 1.0],
+            ),
+          ),
+          child: title(width)),
     );
   }
 
@@ -63,15 +77,6 @@ class CardGame extends StatelessWidget {
       image: DecorationImage(
         image: NetworkImage(game.freetogameProfileUrl),
         fit: BoxFit.cover,
-      ),
-      gradient: LinearGradient(
-        begin: FractionalOffset.topCenter,
-        end: FractionalOffset.bottomCenter,
-        colors: [
-          Colors.black.withOpacity(0.0),
-          Colors.black.withOpacity(0.9),
-        ],
-        stops: const [0.0, 1.0],
       ),
     );
   }
