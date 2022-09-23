@@ -5,13 +5,21 @@ import 'package:gamebook/home/models/game_model.dart';
 
 class GameProvider with ChangeNotifier {
   List<GameModel> _listGame = [];
+  List<GameModel> _listSlide = [];
   GameData? _info;
   bool _loadingList = false;
+  bool _loadingSlide = false;
   bool _loadingDetail = false;
 
   List<GameModel> get listGame => _listGame;
   set listGame(List<GameModel> list) {
     _listGame = list;
+    notifyListeners();
+  }
+
+List<GameModel> get listSlide => _listSlide;
+  set listSlide(List<GameModel> list) {
+    _listSlide = list;
     notifyListeners();
   }
 
@@ -33,10 +41,26 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool get loadingSlide => _loadingSlide;
+  set loadingSlide(bool state) {
+    _loadingSlide = state;
+    notifyListeners();
+  }
+
   Future<void> getData() async {
     loadingList = true;
-    listGame = await getListGameVDio();
+    var res = await getListGameVDio();
+    res.shuffle();
+    listGame = res;
     loadingList = false;
+  }
+
+  Future<void> getSlide()async{
+    loadingSlide = true;
+    var res = await getListSlide();
+    listSlide = res.getRange(0, 10).toList();
+    print(listSlide);
+    loadingSlide = false;
   }
 }
 

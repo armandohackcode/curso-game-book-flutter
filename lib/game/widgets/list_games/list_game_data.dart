@@ -17,7 +17,9 @@ class _ListGameDataState extends State<ListGameData> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<GameProvider>(context, listen: false);
-      provider.getData();
+      if (provider.listGame.isEmpty) {
+        provider.getData();
+      }
     });
     super.initState();
   }
@@ -45,16 +47,21 @@ class _ListGameDataState extends State<ListGameData> {
               ],
             ),
           )
-        : ListView.builder(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            itemCount: provider.listGame.length,
-            padding: const EdgeInsets.all(15),
-            itemBuilder: (BuildContext context, int index) {
-              return CardGame(game: provider.listGame[index]);
-            },
-          );
+        : RefreshIndicator(
+          onRefresh: ()async{
+            provider.getData();
+          },
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              addAutomaticKeepAlives: false,
+              addRepaintBoundaries: false,
+              itemCount: provider.listGame.length,
+              padding: const EdgeInsets.all(15),
+              itemBuilder: (BuildContext context, int index) {
+                return CardGame(game: provider.listGame[index]);
+              },
+            ),
+        );
   }
 }

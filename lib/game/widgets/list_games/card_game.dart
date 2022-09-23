@@ -17,28 +17,37 @@ class CardGame extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 10),
       height: 200,
-      decoration: boxDecoration(),
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context)
-              .push(CupertinoPageRoute(builder: (context) => DetailGame()));
-        },
-        child: Container(
-            alignment: const Alignment(0, 0.9),
-            height: 200,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: FractionalOffset.topCenter,
-                end: FractionalOffset.bottomCenter,
-                colors: [
-                  const Color(0xFF161B22).withOpacity(0.00),
-                  const Color(0xFF161B22).withOpacity(1.0),
-                ],
-                stops: const [0.0, 1.0],
-              ),
-            ),
-            child: title(width)),
+      child: Stack(
+        alignment: const Alignment(0,0),
+        children: [
+          contentImage(width),
+          body(context, width),
+        ],
       ),
+    );
+  }
+
+  InkWell body(BuildContext context, double width) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context)
+            .push(CupertinoPageRoute(builder: (context) => DetailGame()));
+      },
+      child: Container(
+          alignment: const Alignment(0, 0.9),
+          height: 200,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                const Color(0xFF161B22).withOpacity(0.00),
+                const Color(0xFF161B22).withOpacity(1.0),
+              ],
+              stops: const [0.0, 1.0],
+            ),
+          ),
+          child: title(width)),
     );
   }
 
@@ -87,6 +96,16 @@ class CardGame extends StatelessWidget {
         image: NetworkImage(game.thumbnail),
         fit: BoxFit.cover,
       ),
+    );
+  }
+
+  Widget contentImage(double width) {
+    return FadeInImage(
+      height: 200,
+      width: width,
+      fit: BoxFit.cover,
+      placeholder: const AssetImage("assets/img/placeholder.gif"),
+      image: NetworkImage(game.thumbnail),
     );
   }
 }

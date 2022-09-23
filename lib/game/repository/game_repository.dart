@@ -29,6 +29,24 @@ Future<List<GameModel>> getListGame() async {
   }
 }
 
+Future<List<GameModel>> getListSlide() async {
+  try {
+    var route = host + "games?sort-by=popularity";
+    var uri = Uri.parse(route);
+    var res = await http.get(uri, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
+    });
+    print(res.body);
+    return gameModelFromJson(res.body);
+  } catch (e) {
+    if (kDebugMode) {
+      print("Ocurrio un error al traer la información de los juegos");
+      print(e);
+    }
+    return [];
+  }
+}
+
 Future<List<GameModel>> getListGameVDio() async {
   try {
     var route = host + "games";
