@@ -62,6 +62,12 @@ List<GameModel> get listSlide => _listSlide;
     print(listSlide);
     loadingSlide = false;
   }
+
+  Future<void> getDetail(int id)async{
+      loadingDetail = true;
+      info = await getGameById(id);
+      loadingDetail = false;
+  }
 }
 
 //// borrar datos de prueba

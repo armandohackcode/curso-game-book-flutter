@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/bloc/game_provider.dart';
+import 'package:gamebook/game/screens/detail_game.dart';
 import 'package:gamebook/home/models/game_model.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +56,7 @@ class _ListGameSlideState extends State<ListGameSlide> {
   }
 
   Container bodySlide({required GameModel game}) {
+    final provider = Provider.of<GameProvider>(context, listen: false);
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: boxDecoration(game.thumbnail),
@@ -90,7 +93,11 @@ class _ListGameSlideState extends State<ListGameSlide> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: primaryColor),
                   child: const Text("Ver más"),
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.getDetail(game.id);
+                    Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (context) => const DetailGame()));
+                  },
                 ),
               ],
             )

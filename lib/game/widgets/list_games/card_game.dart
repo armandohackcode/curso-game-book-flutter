@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebook/constants.dart';
+import 'package:gamebook/game/bloc/game_provider.dart';
 import 'package:gamebook/game/screens/detail_game.dart';
 import 'package:gamebook/home/models/game_model.dart';
+import 'package:provider/provider.dart';
 
 class CardGame extends StatelessWidget {
   final GameModel game;
@@ -28,10 +30,12 @@ class CardGame extends StatelessWidget {
   }
 
   InkWell body(BuildContext context, double width) {
+    final provider = Provider.of<GameProvider>(context,listen: false);
     return InkWell(
       onTap: () {
+        provider.getDetail(game.id);
         Navigator.of(context)
-            .push(CupertinoPageRoute(builder: (context) => DetailGame()));
+            .push(CupertinoPageRoute(builder: (context) => const DetailGame()));
       },
       child: Container(
           alignment: const Alignment(0, 0.9),

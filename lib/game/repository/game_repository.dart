@@ -65,11 +65,12 @@ Future<List<GameModel>> getListGameVDio() async {
 
 Future<GameData?> getGameById(int id) async {
   try {
-    var route = host + "games?id=$id";
+    var route = host + "game?id=$id";
     var uri = Uri.parse(route);
     var res = await http.get(uri);
+    print(res.body);
     return gameDataFromJson(res.body);
-  } on Exception catch (e) {
+  } catch (e) {
     if (kDebugMode) {
       print("Ocurrio un error al traer el detalle del juego");
       print(e);
