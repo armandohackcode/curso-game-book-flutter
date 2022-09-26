@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebook/constants.dart';
+import 'package:gamebook/game/bloc/game_provider.dart';
+import 'package:gamebook/game/screens/detail_game.dart';
 import 'package:gamebook/home/models/game_model.dart';
+import 'package:provider/provider.dart';
 
 class CardGame extends StatelessWidget {
   final GameModel game;
@@ -15,7 +19,24 @@ class CardGame extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 10),
       height: 200,
-      decoration: boxDecoration(),
+      child: Stack(
+        alignment: const Alignment(0,0),
+        children: [
+          contentImage(width),
+          body(context, width),
+        ],
+      ),
+    );
+  }
+
+  InkWell body(BuildContext context, double width) {
+    final provider = Provider.of<GameProvider>(context,listen: false);
+    return InkWell(
+      onTap: () {
+        provider.getDetail(game.id);
+        Navigator.of(context)
+            .push(CupertinoPageRoute(builder: (context) => const DetailGame()));
+      },
       child: Container(
           alignment: const Alignment(0, 0.9),
           height: 200,
@@ -37,16 +58,16 @@ class CardGame extends StatelessWidget {
   Row title(double width) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [name(width), platform()],
+      children: [name(width), platform(width)],
     );
   }
 
   Container name(double width) {
     return Container(
       padding: const EdgeInsets.only(left: 10),
-      width: width * 0.65,
+      width: width * 0.55,
       child: Text(
-        game.title,
+        game.title.toUpperCase(),
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 18,
@@ -55,8 +76,9 @@ class CardGame extends StatelessWidget {
     );
   }
 
-  Container platform() {
+  Container platform(double width) {
     return Container(
+      width: width * 0.33,
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
         color: primaryColor,
@@ -75,9 +97,19 @@ class CardGame extends StatelessWidget {
   BoxDecoration boxDecoration() {
     return BoxDecoration(
       image: DecorationImage(
-        image: NetworkImage(game.freetogameProfileUrl),
+        image: NetworkImage(game.thumbnail),
         fit: BoxFit.cover,
       ),
+    );
+  }
+
+  Widget contentImage(double width) {
+    return FadeInImage(
+      height: 200,
+      width: width,
+      fit: BoxFit.cover,
+      placeholder: const AssetImage("assets/img/placeholder.gif"),
+      image: NetworkImage(game.thumbnail),
     );
   }
 }
