@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebook/game/widgets/list_games/custom_drawer.dart';
 import 'package:gamebook/game/widgets/list_games/list_game_data.dart';
 import 'package:gamebook/game/widgets/list_games/list_game_slide.dart';
 
@@ -8,6 +9,7 @@ class ListGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustonDrawer(),
       body: SafeArea(
         child: Column(children: [
           SizedBox(

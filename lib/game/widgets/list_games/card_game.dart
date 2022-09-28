@@ -94,14 +94,7 @@ class CardGame extends StatelessWidget {
     );
   }
 
-  BoxDecoration boxDecoration() {
-    return BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage(game.thumbnail),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
+ 
 
   Widget contentImage(double width) {
     return FadeInImage(
