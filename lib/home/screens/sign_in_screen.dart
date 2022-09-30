@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/screens/list_games_screen.dart';
+import 'package:gamebook/home/widgets/button_confirm.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({
@@ -40,18 +41,14 @@ class SignInScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w400),
               ),
             ),
-            ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color?>(primaryColor),
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                    const EdgeInsets.all(10)),
-              ),
+            ButtonConfirm(
+              width: 300,
               icon: Image.asset(
                 "assets/img/google-svgrepo-com.png",
                 width: 35,
                 height: 35,
               ),
+              label: "Iniciar sesión con Google",
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -59,8 +56,8 @@ class SignInScreen extends StatelessWidget {
                   ),
                 );
               },
-              label: const Text("Iniciar sesión con Google"),
             ),
+            
           ],
         ),
       ),

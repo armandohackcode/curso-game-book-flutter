@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/bloc/game_provider.dart';
 import 'package:gamebook/game/widgets/detail_game/modal_show_image.dart';
+import 'package:gamebook/home/widgets/image_content.dart';
 import 'package:provider/provider.dart';
 
 class DetailGame extends StatefulWidget {
@@ -22,7 +24,10 @@ class _DetailGameState extends State<DetailGame> {
           : ListView(
               padding: const EdgeInsets.all(10),
               children: [
-                image(provider),
+                ImageContent(
+                  imageUrl: provider.info!.thumbnail,
+                  width: MediaQuery.of(context).size.width,
+                ),
                 Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.only(top: 15, bottom: 30),
@@ -104,11 +109,9 @@ class _DetailGameState extends State<DetailGame> {
           Container(
               alignment: Alignment.centerLeft,
               width: MediaQuery.of(context).size.width * 0.45,
-              //
               child: Text(
                 label,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: styleTextBold,
               )),
           Container(
             alignment: Alignment.centerLeft,
@@ -116,53 +119,11 @@ class _DetailGameState extends State<DetailGame> {
             padding: const EdgeInsets.all(0),
             child: Text(
               value,
-              style: const TextStyle(fontSize: 16),
+              style: styleText,
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Container image(GameProvider provider) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5, bottom: 10),
-      height: 200,
-      child: Stack(
-        alignment: const Alignment(0, 0),
-        children: [
-          contentImage(provider.info!.thumbnail),
-          body(),
-        ],
-      ),
-    );
-  }
-
-  Widget body() {
-    return Container(
-      alignment: const Alignment(0, 0.9),
-      height: 200,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: FractionalOffset.topCenter,
-          end: FractionalOffset.bottomCenter,
-          colors: [
-            const Color(0xFF161B22).withOpacity(0.00),
-            const Color(0xFF161B22).withOpacity(1.0),
-          ],
-          stops: const [0.0, 1.0],
-        ),
-      ),
-    );
-  }
-
-  Widget contentImage(String image) {
-    return FadeInImage(
-      height: 200,
-      width: MediaQuery.of(context).size.width,
-      fit: BoxFit.cover,
-      placeholder: const AssetImage("assets/img/placeholder.gif"),
-      image: NetworkImage(image),
     );
   }
 }

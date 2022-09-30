@@ -5,6 +5,7 @@ import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/bloc/game_provider.dart';
 import 'package:gamebook/game/screens/detail_game.dart';
 import 'package:gamebook/home/models/game_model.dart';
+import 'package:gamebook/home/widgets/image_content.dart';
 import 'package:provider/provider.dart';
 
 class ListGameSlide extends StatefulWidget {
@@ -15,12 +16,6 @@ class ListGameSlide extends StatefulWidget {
 }
 
 class _ListGameSlideState extends State<ListGameSlide> {
-  // List<String> listImage = [
-  //   "https://www.freetogame.com/g/516/thumbnail.jpg",
-  //   "https://www.freetogame.com/g/508/thumbnail.jpg",
-  //   "https://www.freetogame.com/g/345/thumbnail.jpg",
-  // ];
-
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
@@ -35,85 +30,62 @@ class _ListGameSlideState extends State<ListGameSlide> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
-    return Container(
-        child: CarouselSlider(
+    return CarouselSlider(
       options: CarouselOptions(
-        autoPlay: true,
-        disableCenter: true,
-        viewportFraction: 1.0,
-        enlargeCenterPage: false,
+    autoPlay: true,
+    disableCenter: true,
+    viewportFraction: 1.0,
+    enlargeCenterPage: false,
       ),
       items: (provider.loadingSlide)
-          ? [Image.asset("assets/img/placeholder.gif")]
-          : provider.listSlide.map((item) => bodySlide(game: item)).toList(),
-      // items: listImage
-      //     .map((item) => bodySlide(
-      //         imageUrl: item,
-      //         title: "Titulo",
-      //         detail: " descripcion varios.........................."))
-      //     .toList(),
-    ));
-  }
-
-  Container bodySlide({required GameModel game}) {
-    final provider = Provider.of<GameProvider>(context, listen: false);
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: boxDecoration(game.thumbnail),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: FractionalOffset.topCenter,
-            end: FractionalOffset.bottomCenter,
-            colors: [
-              const Color(0xFF161B22).withOpacity(0.00),
-              const Color(0xFF161B22).withOpacity(1.0),
-            ],
-            stops: const [
-              0.1,
-              1.0,
-            ],
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(game.title,
-                style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(game.shortDescription),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: primaryColor),
-                  child: const Text("Ver más"),
-                  onPressed: () {
-                    provider.getDetail(game.id);
-                    Navigator.of(context).push(CupertinoPageRoute(
-                        builder: (context) => const DetailGame()));
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
+      ? [Image.asset("assets/img/placeholder.gif")]
+      : provider.listSlide.map((item) => bodySlide(game: item)).toList(),
     );
   }
 
-  BoxDecoration boxDecoration(String image) {
-    return BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage(image),
-        fit: BoxFit.contain,
-        centerSlice: Rect.largest,
-        scale: 1.35,
+  Widget bodySlide({required GameModel game}) {
+    final provider = Provider.of<GameProvider>(context, listen: false);
+    return ImageContent(
+      imageUrl: game.thumbnail,
+      height: MediaQuery.of(context).size.height * 0.33,
+      width: MediaQuery.of(context).size.width,
+      child: body(game, provider),
+    );
+  }
+
+  Widget body(GameModel game, GameProvider provider) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            game.title,
+            style: styleTitle,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(game.shortDescription),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: primaryColor),
+                child: const Text("Ver más"),
+                onPressed: () {
+                  provider.getDetail(game.id);
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (context) => const DetailGame(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

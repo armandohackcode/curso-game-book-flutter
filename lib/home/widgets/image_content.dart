@@ -4,7 +4,7 @@ class ImageContent extends StatelessWidget {
   final String imageUrl;
   final String placeholder;
   final double? width;
-  final double? heigth;
+  final double? height;
   final BoxFit fit;
   final Alignment alignment;
   final Widget? child;
@@ -14,7 +14,7 @@ class ImageContent extends StatelessWidget {
       {Key? key,
       required this.imageUrl,
       this.width,
-      this.heigth = 200,
+      this.height = 200,
       this.fit = BoxFit.cover,
       this.placeholder = "assets/img/placeholder.gif",
       this.alignment = const Alignment(0, 0.9),
@@ -24,7 +24,7 @@ class ImageContent extends StatelessWidget {
 
   Widget contentImage() {
     return FadeInImage(
-      height: heigth,
+      height: height,
       width: width,
       fit: BoxFit.cover,
       placeholder: AssetImage(placeholder),
@@ -37,7 +37,7 @@ class ImageContent extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         alignment: alignment,
-        height: heigth,
+        height: height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: FractionalOffset.topCenter,
