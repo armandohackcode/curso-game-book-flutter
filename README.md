@@ -53,6 +53,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ##### Capturas de pantalla del proyecto
 
+<img src="assets/img/demo-screen/photo_2022-10-05_16-44-38.jpg" alt="Your image title" width="250"/>
 ![login](assets/img/demo-screen/photo_2022-10-05_16-44-38.jpg){:height="700px" width="300px"}.
 ![panatalla principal](assets/img/demo-screen/photo_2022-10-05_16-44-56.jpg){:height="700px" width="300px"}.
 ![drawer](assets/img/demo-screen/photo_2022-10-05_16-45-04.jpg){:height="700px" width="300px"}.
