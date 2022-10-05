@@ -4,6 +4,7 @@ import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/bloc/game_provider.dart';
 import 'package:gamebook/game/screens/detail_game.dart';
 import 'package:gamebook/home/models/game_model.dart';
+import 'package:gamebook/home/widgets/image_content.dart';
 import 'package:provider/provider.dart';
 
 class CardGame extends StatelessWidget {
@@ -15,43 +16,21 @@ class CardGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    final provider = Provider.of<GameProvider>(context, listen: false);
     // var height = MediaQuery.of(context).size.height;
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 10),
       height: 200,
-      child: Stack(
-        alignment: const Alignment(0,0),
-        children: [
-          contentImage(width),
-          body(context, width),
-        ],
+      child: ImageContent(
+        imageUrl: game.thumbnail,
+        width: width,
+        child: title(width),
+        onPressed: () {
+          provider.getDetail(game.id);
+          Navigator.of(context).push(
+              CupertinoPageRoute(builder: (context) => const DetailGame()));
+        },
       ),
-    );
-  }
-
-  InkWell body(BuildContext context, double width) {
-    final provider = Provider.of<GameProvider>(context,listen: false);
-    return InkWell(
-      onTap: () {
-        provider.getDetail(game.id);
-        Navigator.of(context)
-            .push(CupertinoPageRoute(builder: (context) => const DetailGame()));
-      },
-      child: Container(
-          alignment: const Alignment(0, 0.9),
-          height: 200,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-              colors: [
-                const Color(0xFF161B22).withOpacity(0.00),
-                const Color(0xFF161B22).withOpacity(1.0),
-              ],
-              stops: const [0.0, 1.0],
-            ),
-          ),
-          child: title(width)),
     );
   }
 
@@ -68,10 +47,7 @@ class CardGame extends StatelessWidget {
       width: width * 0.55,
       child: Text(
         game.title.toUpperCase(),
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
+        style: styleTitle,
       ),
     );
   }
@@ -91,25 +67,6 @@ class CardGame extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-    );
-  }
-
-  BoxDecoration boxDecoration() {
-    return BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage(game.thumbnail),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget contentImage(double width) {
-    return FadeInImage(
-      height: 200,
-      width: width,
-      fit: BoxFit.cover,
-      placeholder: const AssetImage("assets/img/placeholder.gif"),
-      image: NetworkImage(game.thumbnail),
     );
   }
 }

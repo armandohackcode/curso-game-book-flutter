@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gamebook/constants.dart';
 import 'package:gamebook/game/screens/list_games_screen.dart';
+import 'package:gamebook/home/bloc/sign_in_social_network.dart';
+import 'package:gamebook/home/widgets/button_confirm.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({
@@ -11,6 +14,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    final auth = Provider.of<SignInSocialNetworkProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -40,27 +44,26 @@ class SignInScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w400),
               ),
             ),
-            ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color?>(primaryColor),
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                    const EdgeInsets.all(10)),
-              ),
-              icon: Image.asset(
-                "assets/img/google-svgrepo-com.png",
-                width: 35,
-                height: 35,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const ListGameScreen(),
+            (auth.loadingAuth)
+                ? const Center(child: CircularProgressIndicator())
+                : ButtonConfirm(
+                    width: 300,
+                    icon: Image.asset(
+                      "assets/img/google-svgrepo-com.png",
+                      width: 35,
+                      height: 35,
+                    ),
+                    label: "Iniciar sesión con Google",
+                    onPressed: () async {
+                      await auth.googleAuth();
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const ListGameScreen(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-              label: const Text("Iniciar sesión con Google"),
-            ),
           ],
         ),
       ),
