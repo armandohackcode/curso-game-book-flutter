@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:gamebook/constants.dart';
+import 'package:gamebook/home/bloc/sign_in_social_network.dart';
+import 'package:provider/provider.dart';
 
 class CustonDrawer extends StatefulWidget {
   const CustonDrawer({Key? key}) : super(key: key);
@@ -11,20 +14,32 @@ class CustonDrawer extends StatefulWidget {
 class _CustonDrawerState extends State<CustonDrawer> {
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<SignInSocialNetworkProvider>(context);
     return Drawer(
       backgroundColor: backgroundColor,
       child: ListView(
         children: [
-          imageProfile(context),
           
-          const ListTile(
-            title: Text(
-              "Arwen Darly",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            subtitle: Text(
-              "arwendarly@gmail.com",
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14,color: fontColor),
+          imageProfile(context,
+              photoUrl:
+                  auth.userInfo.photoURL ),
+                  
+          SizedBox(
+            width: 100,
+            child: ListTile(
+              title: Text(
+                
+                auth.userInfo.displayName ?? "Anónimo",
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              subtitle: Text(
+                auth.userInfo.email ?? "",
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14,
+                    color: fontColor),
+              ),
             ),
           ),
           const SizedBox(height: 30),
@@ -50,9 +65,13 @@ class _CustonDrawerState extends State<CustonDrawer> {
             ),
           ),
           const Divider(color: fontColor),
-          const ListTile(
-            leading: Icon(Icons.input, color: fontColor),
-            title: Text(
+           ListTile(
+            leading: const Icon(Icons.input, color: fontColor),
+            onTap: ()async{
+              await auth.logOut();
+              Phoenix.rebirth(context);
+            },
+            title: const Text(
               "Cerrar sesión",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
@@ -62,11 +81,16 @@ class _CustonDrawerState extends State<CustonDrawer> {
     );
   }
 
-  Stack imageProfile(BuildContext context) {
+  Stack imageProfile(BuildContext context,
+      {String? photoUrl}) {
     return Stack(
-      alignment: const Alignment(1, 1.8),
+      alignment: const Alignment(1, 1.3),
       children: [
         topImage(context),
+        // ClipOval(
+        //   child: (photoUrl!=null)?
+        //   Image.network(photoUrl):Image.asset("assets/img/image-perfil.png"),
+        // )
         ClipOval(
           child: Image.asset("assets/img/image-perfil.png"),
         )
