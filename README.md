@@ -53,8 +53,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ##### Capturas de pantalla del proyecto
 
-![login](assets/img/demo-screen/photo_2022-10-05_16-44-38.jpg){:height="700px" width="300px"}
-![panatalla principal](assets/img/demo-screen/photo_2022-10-05_16-44-56.jpg){:height="700px" width="300px"}
-![drawer](assets/img/demo-screen/photo_2022-10-05_16-45-04.jpg){:height="700px" width="300px"}
-![detalle 1](assets/img/demo-screen/photo_2022-10-05_16-45-04.jpg){:height="700px" width="300px"}
-![detalle 2](assets/img/demo-screen/photo_2022-10-05_16-45-21.jpg){:height="700px" width="300px"}
+![login](assets/img/demo-screen/photo_2022-10-05_16-44-38.jpg){:height="700px" width="300px"}.
+![panatalla principal](assets/img/demo-screen/photo_2022-10-05_16-44-56.jpg){:height="700px" width="300px"}.
+![drawer](assets/img/demo-screen/photo_2022-10-05_16-45-04.jpg){:height="700px" width="300px"}.
+![detalle 1](assets/img/demo-screen/photo_2022-10-05_16-45-04.jpg){:height="700px" width="300px"}.
+![detalle 2](assets/img/demo-screen/photo_2022-10-05_16-45-21.jpg){:height="700px" width="300px"}.
